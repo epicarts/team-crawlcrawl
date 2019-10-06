@@ -1,0 +1,167 @@
+version: '3'
+
+volumes:
+  db-data: {}
+
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
+    container_name: elasticsearch1
+    environment:
+      - node.name=elasticsearch1
+      - cluster.name=docker-cluster
+      - cluster.initial_master_nodes=elasticsearch1
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms256M -Xmx256M"
+      - http.cors.enabled=true
+      - http.cors.allow-origin=*
+      - network.host=_eth0_
+    ulimits:
+      nproc: 65535
+      memlock:
+        soft: -1
+        hard: -1
+    cap_add:
+      - ALL
+    # privileged: true
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      resources:
+        limits:
+          cpus: '1'
+          memory: 256M
+        reservations:
+          cpus: '1'
+          memory: 256M
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 10s
+    volumes:
+      - type: volume
+        source: logs
+        target: /var/log
+      - type: volume
+        source: esdata1
+        target: /usr/share/elasticsearch/data
+
+  elasticsearch2:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.2.0
+    container_name: elasticsearch2
+    environment:
+      - node.name=elasticsearch2
+      - cluster.name=docker-cluster
+      - cluster.initial_master_nodes=elasticsearch1
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms256M -Xmx256M"
+      - "discovery.zen.ping.unicast.hosts=elasticsearch1"
+      - http.cors.enabled=true
+      - http.cors.allow-origin=*
+      - network.host=_eth0_
+    ulimits:
+      nproc: 65535
+      memlock:
+        soft: -1
+        hard: -1
+    cap_add:
+      - ALL
+    # privileged: true
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      resources:
+        limits:
+          cpus: '1'
+          memory: 256M
+        reservations:
+          cpus: '1'
+          memory: 256M
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 10s
+    volumes:
+      - type: volume
+        source: logs
+        target: /var/log
+      - type: volume
+        source: esdata2
+        target: /usr/share/elasticsearch/data
+    networks:
+      - elastic
+      - ingress
+    ports:
+      - 9201:9200
+
+    kibana:
+    image: docker.elastic.co/kibana/kibana:7.2.0
+    container_name: kibana
+    environment:
+      SERVER_NAME: localhost
+      ELASTICSEARCH_URL: http://elasticsearch1:9200/
+    ports:
+      - 5601:5601
+    volumes:
+      - type: volume
+        source: logs
+        target: /var/log
+    ulimits:
+      nproc: 65535
+      memlock:
+        soft: -1
+        hard: -1
+    cap_add:
+      - ALL
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      resources:
+        limits:
+          cpus: '1'
+          memory: 256M
+        reservations:
+          cpus: '1'
+          memory: 256M
+      restart_policy:
+        condition: on-failure
+        delay: 30s
+        max_attempts: 3
+        window: 120s
+    networks:
+      - elastic
+      - ingress
+
+  crawling:
+    build:
+      context: .
+      dockerfile: ./docker/crawling/Dockerfile
+    restart: always
+    volumes:
+      - ./crawling_code/:/code/
+    #command: gunicorn hanium.wsgi:application --bind 0.0.0.0:8000
+    #command: bin/run.sh
+    command: bash -c "python manage.py makemigrations main chat && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    #command: bash -c "python manage.py migrate && gunicorn hanium.wsgi -b 0.0.0.0:8000"
+    links:
+      - db
+      - redis
+    depends_on:
+      - db
+
+  db:
+    image: mysql
+    restart: always
+    environment:
+      - TZ=Asia/Seoul
+    volumes:
+      - db-data:/var/lib/mysql
+    command: --character_set_client=utf8 --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --character-set-client-handshake=FALSE
