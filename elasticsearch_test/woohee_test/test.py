@@ -4,35 +4,13 @@ from elasticsearch import Elasticsearch, helpers
 es = Elasticsearch("http://127.0.0.1:9200/")
 print(es.info())
 b_body = {
-	"settings": {
-            "index": {
-                "analysis": {
-                    "analyzer": {
-                        "my_analyzer": {
-                            "type": "custom",
-                           
-                        }
-                    }
-                }
-            }
-        },
 		"mappings": {
-            "dictionary_datas": {
+            "twitter": {
                 "properties": {
-                    "id": {
-                        "type": "long"
-                    },
-                    "title": {
-                        "type": "text",
-                        "analyzer": "my_analyzer"
-                    },
-                    "content": {
-                        "type": "text",
-                        "analyzer": "my_analyzer"
-                    }
-                }
-            }
-        }
+                	"HTMI" : {"type": "text"}   //raw_data
+				}
+			}
+		}
 	}
 def make_index(es, index_name):
     """인덱스를 신규 생성한다(존재하면 삭제 후 생성) """
