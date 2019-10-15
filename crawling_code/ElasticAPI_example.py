@@ -63,8 +63,8 @@ if __name__ == "__main__":
     #analysis data 를 삽입하느 에제
     ea = ElasticAPI()#클래스 생성
     json_data = ea.analysis_index_to_json(author="길동이", timestamp="2015-01-01", title="의미 없는 제목",contents="냉무", nlp_contents="형태소", url="http://naver.com", publisher="트위터", tag ="태그 종류")
-    ea.data_insert(index="analysis", doc_type="analysis", body=json_data, id=2)#id 2 삽입
-    ea.data_insert(index="analysis", doc_type="analysis", body=json_data, id=1)#id 1 삽입
+    ea.data_insert(index="analysis", doc_type="doc", body=json_data, id=2)#id 2 삽입
+    ea.data_insert(index="analysis", doc_type="doc", body=json_data, id=1)#id 1 삽입
 
 
     res = ea.get(index="analysis", id=1)
