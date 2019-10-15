@@ -30,7 +30,7 @@ class ElasticAPI:
         return body
 
     #analysis data 일 경우
-    def analysis_index_to_json(self, author="홍길동", timestamp="2015-01-01", title="의미 없는 제목",contents="냉무", nlp_contents="형태소", url="http://naver.com", publisher="트위터", tag ="태그 종류"):
+    def analysis_index_to_json(self, author="홍길동", timestamp="2015-01-01", title="의미 없는 제목",contents="냉무", nlp_contents="형태소", url="http://naver.com", publisher="트위터", tag =None):
         file_data = OrderedDict()
         file_data['author'] = author
         file_data['timestamp'] = timestamp
