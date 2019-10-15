@@ -122,3 +122,6 @@ res
 #bulk 불러오기
 res = es.get(index="classes",doc_type="class", id=5)
 res
+
+res = es.transport.perform_request(method = 'GET' ,url = '/classes/_mapping')
+print(json.dumps(res, indent=3, separators=(',', ': ')))

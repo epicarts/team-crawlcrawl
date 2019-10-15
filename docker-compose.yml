@@ -14,7 +14,9 @@ services:
     environment:
       - TZ=Asia/Seoul
       - PYTHONUNBUFFERED=1
-    # command: bash -c "python"
+      - ELASTICSEARCH_HOST=elasticsearch
+      - ELASTICSEARCH_PORT=9200
+    #command: bash -c "python /code/elasticsearch_code/mapping.py"
     volumes:
       - ./:/code/
       - aptdata:/tmp
@@ -37,6 +39,7 @@ services:
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - LANG=ko_KR.UTF-8
       - LANGUAGE=ko_KR.UTF-8
+      - TZ=Asia/Seoul
     ulimits:
       memlock:
         soft: -1
@@ -45,6 +48,8 @@ services:
       - esdata1:/usr/share/elasticsearch/data
     ports:
       - 9200:9200
+    expose:
+      - "9200"
 
   kibana:
     image: docker.elastic.co/kibana/kibana:7.3.2
