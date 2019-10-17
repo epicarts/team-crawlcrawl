@@ -1,4 +1,5 @@
 from requests_html import HTMLSession
+import re
 #import urllib.parse as url_parse
 
 session = HTMLSession();
@@ -30,7 +31,7 @@ for line2 in r.html.find('div#news_content'):
 
 
 for line2 in r.html.find('div#news_content'):
-        writer = line2.links
+        writer = re.match(r'\[[가-힣\s]*\([a-zA-Z0-9@.]*\)\]',a).group()
         print('작성자: ', writer)
 
 f.close()
