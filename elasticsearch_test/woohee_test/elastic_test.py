@@ -39,7 +39,8 @@ ppr.pprint(results)
 for result in results['hits']['hits']:
     print( 'source:', result['_source'])
 print('\n')
+#조회
 doc = es.get(index = index_name,doc_type = 'string',id=1)
 print(doc)
-print json.dumps(doc, indent = 2)
+#print json.dumps(doc, indent = 2)
 
