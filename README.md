@@ -1,10 +1,26 @@
 # team-crawlcrawl
+2019 캡스톤 디자인 깃허브 페이지 입니다.
+
+# **docker-compose-elasticsearch-kibana-crawling**
+* elasticsearch == 7.3.2
+* python == 3.6.8
+* kibana == 7.3.2
+ 
 
 
-# **docker-compose-elasticsearch-kibana**
+# **docker-compose command**
+`docker-compose up`
+도커 컴포즈 실행 명령어 
 
-# **Overview**
-Docker Compose for 3 Node Elasticsearch (7.2.0) Cluster and Kibana (7.2.0) Instance for development purposes.
+`docker-compose up --build`
+도커 컴포즈 실행 및 빌드
+
+`docker ps`
+현재 도커 컨테이너 상태를 보여줌
+
+`docker exec -it 실행중인 컨테이너 이름 /bin/bash`
+현재 실행되고 있는 도커 컨테이너의 bash 쉘 실행
+
 
 # Crawler 사용 정보 수집 모듈
 * requests-html 모듈을 사용한 크롤러 제작
