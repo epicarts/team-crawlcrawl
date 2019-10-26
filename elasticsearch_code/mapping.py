@@ -27,7 +27,7 @@ def create_analysis_index():
             "doc":{
                 "properties": {
                     "author": {"type": "text"}, #작성자
-                    "timestamp": {"type":"date"}, #작성시간 "2015-01-01" or "2015/01/01 12:10:30".
+                    "timestamp": {"type":"date", "format":"yyyy-MM-dd||yyyy-MM-dd HH:mm"}, #작성시간 "2015-01-01" or "2015/01/01 12:10:30".
                     "title": {"type": "text"},# 제목
                     "contents": {"type": "text"}, #글 내용
                     "nlp_contents": {"type": "keyword"},# 형태소 분석된 내용
