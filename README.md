@@ -1,5 +1,5 @@
 # team-crawlcrawl
-2019 캡스톤 디자인 깃허브 페이지 입니다.
+2019 캡스톤 디자인 깃허브 페이지
 
 # **docker-compose-elasticsearch-kibana-crawling**
 * elasticsearch == 7.3.2
