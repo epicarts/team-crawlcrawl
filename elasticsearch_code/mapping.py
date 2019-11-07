@@ -13,6 +13,7 @@ def create_raw_index():
         "mappings": {
             "twitter":{
                 "properties": {
+					"timestamp": {"type":"date", "format":"yyyy-MM-dd||yyyy-MM-dd HH:mm"}, #작성시간 "2015-01-01" or "2015/01/01 12:10:30".
                     "html":{"type": "text"},
                 }
             }
