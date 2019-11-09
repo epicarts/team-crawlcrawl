@@ -68,11 +68,11 @@ def news_crawl(r2):
     #제목, 날짜, 내용, 작성자 별로 크롤링 하여 변수 저장 및 출력
 	for line2 in r2.html.find('div#news_title02'):
 		news_title = line2.text
-		print('제목: ', news_title)
+		#print('제목: ', news_title)
 
 	for line2 in r2.html.find('div#news_util01'):
 		date = line2.text
-		print('날짜: ', date[8:])
+		#print('날짜: ', date[8:])
 	
 	for line2 in r2.html.find('div#news_content'):
 		writer = re.search(r'\[[가-힣\s]*\]',line2.text)
@@ -135,4 +135,6 @@ if __name__ == "__main__":
 		r2 = session.get(url)
 		news_crawl(r2)
 		print("끝====================================")
+		
+	results = es.search(index=index_name, body={'query':{'match':{'goods_name':'노트북'}}})
 		
