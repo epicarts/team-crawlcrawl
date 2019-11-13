@@ -11,5 +11,3 @@ RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r pip_requirements.txt
 
 WORKDIR /code/crawling_code
-
-

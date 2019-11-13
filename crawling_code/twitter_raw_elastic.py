@@ -20,7 +20,7 @@ def raw_index_to_json(html_data):
 	raw_data['html'] = html_data
 	body = json.dumps(raw_data,ensure_ascii=False, indent = 2)
 	return body
-  
+
 #보안뉴스 기사의 html(r2.text)       
 
 #r.이라는 객체가 얻어온 html 코드를 얻어와서 find()를 사용하여 경로를 지정해줘서 해당 경로에 위치하는 태그 객체를 얻어온다 
@@ -44,13 +44,10 @@ if __name__ == "__main__":
 	r.html.render(scrolldown=1,sleep=0.2)
 
 
-
 	for line in r.html.find(extract_news_link):
 		url = line.text.replace('…','')         #...제거
 		url_len = len(url)
 		news_url.append(url[:url_len-1])            #공백제거
-
-
 
 	#news_url에 저장된 트위터에서 읽어온 뉴스url을 r2변수에 저장 및 함수로 보내기
 	for url in news_url:
@@ -60,8 +57,6 @@ if __name__ == "__main__":
 		json_data = raw_index_to_json(html_data = doc) # 알맞게 가공
 		#print(json_data)
 		insert_data = insert(index_name, doc_type, body=json_data)
-		
-		
 
 
 	

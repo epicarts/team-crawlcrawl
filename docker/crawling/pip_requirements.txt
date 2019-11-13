@@ -1,2 +1,6 @@
 requests-html
 elasticsearch
+twitterscraper
+tweepy
+json
+pymysql
