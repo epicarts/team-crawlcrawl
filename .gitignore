@@ -1,6 +1,0 @@
-.vscode
-.DS_Store
-__pycache__/
-*.py[cod]
-jdbc-int-sql_last_value.yml
-last_run_metadata/
