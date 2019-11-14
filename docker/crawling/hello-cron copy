@@ -1,0 +1,2 @@
+* * * * * echo "Hello world" >> /var/log/cron.log 2>&1 > /proc/1/fd/1 2>/proc/1/fd/2 | dos2unix
+* * * * * . /root/envs.sh;/usr/local/bin/python /code/crawling_code/crontab_twitterScraper_code.py >> /var/log/crawler.log 2>&1 | dos2unix

@@ -160,7 +160,8 @@ if __name__ == '__main__':
         is_exists = select_mydb(sql, val)[0][0] # ture: 1 / false: 0 반환
 
         if is_exists: # 해당 URL이 있으면 패스 
-            print("Already Exists url")
+            continue
+            #print("Already Exists url")
         else:# 해당 URL이 없으면 크롤링 후 삽입하기.
             session = HTMLSession()
             r2 = session.get(boannews_url)# 보안뉴스 세션 열고 수집.
@@ -175,3 +176,4 @@ if __name__ == '__main__':
             except:
                 print("예외 발생.")
                 pass
+    print("수집 완료")

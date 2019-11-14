@@ -12,11 +12,15 @@ services:
       dockerfile: ./docker/crawling/Dockerfile
     container_name: crawling
     restart: always
+    #volumes:
+    #  - ./docker/crawling/hello-cron/:/etc/cron.d/hello-cron #hello-cron 로그 저장 경로
     environment:
       - TZ=Asia/Seoul
       - PYTHONUNBUFFERED=1
       - ELASTICSEARCH_HOST=elasticsearch
       - ELASTICSEARCH_PORT=9200
+      - MYSQL_HOST=db
+
     #command: bash -c "python /code/elasticsearch_code/mapping.py"
     volumes:
       - ./:/code/

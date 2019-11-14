@@ -1,0 +1,1 @@
+*/15 * * * * . /code/docker/crawling/envs.sh;/usr/local/bin/python /code/crawling_code/crontab_twitterScraper_code.py > /proc/1/fd/1 2>/proc/1/fd/2 | dos2unix

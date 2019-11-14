@@ -1,0 +1,16 @@
+export PYTHONUNBUFFERED=1
+export LANG=C.UTF-8
+export TZ=Asia/Seoul
+export ELASTICSEARCH_PORT=9200
+export HOSTNAME=cfade6aa23fe
+export ELASTICSEARCH_HOST=elasticsearch
+export GPG_KEY=0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D
+export PWD=/code/crawling_code
+export HOME=/root
+export MYSQL_HOST=db
+export TERM=xterm
+export PYTHON_VERSION=3.6.8
+export SHLVL=1
+export PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export PYTHON_PIP_VERSION=19.1.1
+export _=/usr/bin/env
