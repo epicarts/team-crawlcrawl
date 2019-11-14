@@ -41,7 +41,7 @@ if __name__ == "__main__":
 	#render(): 자바스크립트가 실행된 html 코드를 받아올수 있게 하는 함수
 	#트위터는 스크롤을 내리면 계속해서 밑에 내용이 추가되는 형태로 이루어짐
 	#코드로 스크롤을 n번 시킴. 스크롤해서 바로 뜨는게 아니라 200ms를 쉬고 나온 html 결과를 가져옴.
-	r.html.render(scrolldown=1,sleep=0.2)
+	r.html.render(scrolldown=300,sleep=0.2)
 
 
 	for line in r.html.find(extract_news_link):

@@ -72,7 +72,8 @@ sql = '''
                 insertion_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 is_deleted boolean not null default false,
                 PRIMARY KEY(id),
-                INDEX(url(255))
+                INDEX(url(255)),
+                CONSTRAINT contacts_unique UNIQUE (url)
             )
 '''
 cursor.execute(sql)
@@ -134,3 +135,9 @@ INSERT INTO es_table (id, client_name) VALUES (<id>, <client name>);
 UPDATE es_table SET client_name = <new client name> WHERE id=<id>;
 INSERT INTO es_table (id, client_name) VALUES (<id>, <client name when created> O
 '''
+
+# publisher: 보안뉴스 에 가장 최근 post_create_datetime 와 URL을 가져오는 쿼리.
+# sql = "SELECT post_create_datetime, URL FROM raw_table WHERE publisher='보안뉴스' ORDER BY post_create_datetime DESC limit 1"
+# sql_result = select_mydb(sql)
+# lately_post_create_datetime = sql_result[0][0]
+# lately_url = sql_result[0][1]
