@@ -1,0 +1,5 @@
+requests-html
+elasticsearch
+twitterscraper==1.4.0
+tweepy
+pymysql

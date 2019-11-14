@@ -1,0 +1,108 @@
+version: '3'
+
+volumes:
+  esdata1: {}
+  aptdata: {}
+  mysql-db: {}
+
+services:
+  crawling:
+    build:
+      context: .
+      dockerfile: ./docker/crawling/Dockerfile
+    container_name: crawling
+    restart: always
+    environment:
+      - TZ=Asia/Seoul
+      - PYTHONUNBUFFERED=1
+      - ELASTICSEARCH_HOST=elasticsearch
+      - ELASTICSEARCH_PORT=9200
+    #command: bash -c "python /code/elasticsearch_code/mapping.py"
+    volumes:
+      - ./:/code/
+      - aptdata:/tmp
+    depends_on:
+      - elasticsearch
+    links:
+      - elasticsearch
+    tty: true
+
+  elasticsearch:
+    build:
+      context: .
+      dockerfile: ./docker/elasticsearch/Dockerfile
+    #image: docker.elastic.co/elasticsearch/elasticsearch:7.3.2
+    container_name: elasticsearch
+    environment:
+      - node.name=elasticsearch
+      - discovery.seed_hosts=elasticsearch
+      - cluster.initial_master_nodes=elasticsearch
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - LANG=ko_KR.UTF-8
+      - LANGUAGE=ko_KR.UTF-8
+      - TZ=Asia/Seoul
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - esdata1:/usr/share/elasticsearch/data
+      - ./userdict_ko.txt:/usr/share/elasticsearch/config/userdict_ko.txt #단어 분류를 위한 유저 사전 추가
+    ports:
+      - 9200:9200
+    expose:
+      - "9200"
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.3.2
+    container_name: kibana
+    environment:
+      ELASTICSEARCH_URL: "http://elasticsearch:9200"
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+
+  db:
+    image: mysql:8.0.18
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=logstash_db
+      - MYSQL_USER=user
+      - TZ=Asia/Seoul
+    volumes:
+      - mysql-db:/var/lib/mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --character-set-client-handshake=FALSE
+    ports:
+      - 3306:3306
+    expose:
+      - '3306'
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.3.2
+    container_name: logstash
+    command: bin/logstash
+    volumes:
+      - ./docker/logstash/last_run_metadata/:/usr/share/last_run_metadata/ #jdbc 로그 저장 경로
+      - ./docker/logstash/pipeline/:/usr/share/logstash/pipeline/
+      - ./docker/logstash/driver/mysql-connector-java-5.1.48-bin.jar:/usr/share/logstash/logstash-core/lib/jars/mysql-connector-java-5.1.48-bin.jar
+      - ./docker/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml #logstash 설정
+      - ./docker/logstash/config/piplines.yml:/usr/share/logstash/config/piplines.yml #piplines 설정
+
+    environment:
+      - LOGSTASH_JDBC_DRIVER_JAR_LOCATION=/usr/share/logstash/logstash-core/lib/jars/mysql-connector-java-5.1.48-bin.jar
+      - LOGSTASH_JDBC_DRIVER=com.mysql.jdbc.Driver
+      - LOGSTASH_JDBC_URL=jdbc:mysql://db:3306/logstash_db?useUnicode=true&characterEncoding=utf8
+      - LOGSTASH_JDBC_USERNAME=root
+      - LOGSTASH_JDBC_PASSWORD=root
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - TZ=Asia/Seoul
+      - MYSQL_HOST=db
+    ports:
+    - 10080:10080
+    depends_on:
+    - elasticsearch
+    - db

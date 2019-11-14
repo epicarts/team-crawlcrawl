@@ -1,0 +1,55 @@
+저장 - 원시데이터, 분석된 데이터
+
+# Elasticsearch의 구조를 URL 형태로 살펴보자 (http://server/index/doc_type/doc_id)
+   -->https://ssaemo.tistory.com/161
+
+# 작성자(문자열)-writer, 내용(문자열)-contents, 작성일(DATE)-long아님date, 사이트 출처(문자열)-source, 제목(문자열)-title
+
+# 연결
+es = Elasticsearch("http://127.0.0.1:9200")  엘라스틱은 9200포트 사용
+
+# 색인 생성 & 매핑(타입정하기?)
+//샤드 = 인덱스를 조각낸것,, 조각난 데이터? --> 나누어진 데이터를 편하게 각 호스트에 분리하여 보관가능
+/*http://blog.naver.com/PostView.nhn?blogId=takane7&logNo=221438265860&parentCategoryNo=&categoryNo=6&viewDate=&isShowPopularPosts=true&from=search*/
+
+index_settings = {
+	"settings" : {
+			"number_of_shards" : 2,		//샤드 갯수 생성(수정이 불가)
+			"number_of_replicas : 1
+		},
+		"mappings":{
+			"내맘?":{
+				"properties":{
+					"Writer" : {"type": "text"}   //작성자
+					"Contents" : {"type": "text"}	//내용	
+					"Date" : {"type": "date"}		//작성일자
+					"Source" : {"type": "text"}		//작성출처(출판사)
+					"Title"  : {"type": "text"}		//작성제목
+				}
+			}
+		}
+	}
+}
+
+index_settings = {
+	"settings" : {
+			"number_of_shards" : 2,		//샤드 갯수 생성(수정이 불가)
+			"number_of_replicas : 1
+		},
+		"mappings":{
+			"내맘?":{
+				"properties":{
+					"Writer" : {"type": "text"}   //작성자
+					"Contents" : {"type": "text"}	//내용	
+					"Date" : {"type": "date"}		//작성일자
+					"Source" : {"type": "text"}		//작성출처(출판사)
+					"Title"  : {"type": "text"}		//작성제목
+				}
+			}
+		}
+	}
+}
+
+es.indices.create(index = 내맘?), body=index_settings)//생성
+es.indices.get_mapping(index = 내맘?)  // 내맘?이라는 이름의 색인과 타입을 확인
+es.indices.get_setting()   //요청한 샤드와 레플리카 수를 포함한 색인의 설정 정보를 제공
