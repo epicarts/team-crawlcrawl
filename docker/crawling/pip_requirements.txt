@@ -1,6 +1,6 @@
 requests-html
-elasticsearch
+elasticsearch==7.0.4
 twitterscraper==1.4.0
-tweepy
-pymysql
+tweepy==3.8.0
+pymysql==0.9.3
 cryptography
