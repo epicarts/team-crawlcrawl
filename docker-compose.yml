@@ -18,7 +18,7 @@ services:
       - ELASTICSEARCH_HOST=elasticsearch
       - ELASTICSEARCH_PORT=9200
       - MYSQL_HOST=db
-    command: /bin/sh -c "chmod +x entrypoint.sh && entrypoint.sh"
+    command: /bin/sh -c "chmod +x /usr/local/bin/entrypoint.sh && entrypoint.sh"
     volumes:
       - ./:/code/
       - aptdata:/tmp
