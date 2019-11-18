@@ -9,14 +9,22 @@ RUN apt-get update && apt-get install -y cron gconf-service gconf-service libaso
 WORKDIR /code/docker/crawling
 RUN pip install -r pip_requirements.txt
 
+
+#RUN crontab /etc/cron.d/hello-cron
+#RUN touch /var/log/crawler.log
+#CMD cron && tail -f /var/log/crawler.log
+
+# RUN chmod +x export_env.sh
+# CMD ["export_env.sh"]
+WORKDIR /code/crawling_code
+
+ADD docker/crawling/export_env.sh /export_env.sh
+RUN chmod +x /export_env.sh
+RUN env | sed 's/^\(.*\)$/export \1/g' > /root/envs.sh
+RUN chmod +x /root/envs.sh
+
 COPY docker/crawling/hello-cron /etc/cron.d/hello-cron
 RUN chmod 0644 /etc/cron.d/hello-cron
 RUN crontab /etc/cron.d/hello-cron
 RUN touch /var/log/crawler.log
 CMD cron && tail -f /var/log/crawler.log
-
-# RUN chmod +x export_env.sh
-
-# CMD ["export_env.sh"]
-
-WORKDIR /code/crawling_code
