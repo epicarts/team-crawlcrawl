@@ -1,2 +1,0 @@
-*/5 * * * * . /code/docker/crawling/envs.sh;/usr/local/bin/python /code/crawling_code/crontab_python/boan_news_crawler.py > /proc/1/fd/1 2>/proc/1/fd/2 | dos2unix
-* * * * * . /code/docker/crawling/envs.sh;/usr/local/bin/python /code/crawling_code/crontab_python/user_twitter_crawler.py > /proc/1/fd/1 2>/proc/1/fd/2 | dos2unix

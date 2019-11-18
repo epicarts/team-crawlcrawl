@@ -12,19 +12,18 @@ services:
       dockerfile: ./docker/crawling/Dockerfile
     container_name: crawling
     restart: always
-    #volumes:
-    #  - ./docker/crawling/hello-cron/:/etc/cron.d/hello-cron #hello-cron 로그 저장 경로
     environment:
       - TZ=Asia/Seoul
       - PYTHONUNBUFFERED=1
       - ELASTICSEARCH_HOST=elasticsearch
       - ELASTICSEARCH_PORT=9200
       - MYSQL_HOST=db
-
-    #command: bash -c "python /code/elasticsearch_code/mapping.py"
+    command: /bin/sh -c "entrypoint.sh"
     volumes:
       - ./:/code/
       - aptdata:/tmp
+      - ./docker/crawling/entrypoint.sh:/usr/local/bin/entrypoint.sh #실행 될 쉘 경로
+      - ./docker/crawling/cron_config:/etc/cron.d/cron_config #cron 설정 파일 경로
     depends_on:
       - elasticsearch
     links:
@@ -99,7 +98,7 @@ services:
     environment:
       - LOGSTASH_JDBC_DRIVER_JAR_LOCATION=/usr/share/logstash/logstash-core/lib/jars/mysql-connector-java-5.1.48-bin.jar
       - LOGSTASH_JDBC_DRIVER=com.mysql.jdbc.Driver
-      - LOGSTASH_JDBC_URL=jdbc:mysql://db:3306/logstash_db?useUnicode=true&characterEncoding=utf8
+      - LOGSTASH_JDBC_URL=jdbc:mysql://db:3306/logstash_db?serverTimezone=Asia/Seoul&useUnicode=true&characterEncoding=utf8
       - LOGSTASH_JDBC_USERNAME=root
       - LOGSTASH_JDBC_PASSWORD=root
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
