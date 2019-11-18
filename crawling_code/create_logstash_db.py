@@ -1,6 +1,8 @@
 import pymysql
 import os
-
+'''
+테이블 생성해주는 python 코드 
+'''
 mysql_ip = os.getenv('MYSQL_HOST','localhost')
 
 connection = pymysql.connect(
@@ -20,16 +22,22 @@ sql = '''
                 content TEXT(65535) NOT NULL,
                 url VARCHAR(255) DEFAULT NULL,
                 publisher VARCHAR(255) NOT NULL,
-                tag VARCHAR(255) DEFAULT NULL,
+                tag VARCHAR(255) DEFAULT false,
                 post_create_datetime TIMESTAMP,
                 modification_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 insertion_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                is_deleted boolean not null default false,
+                is_deleted boolean not null DEFAULT false,
                 PRIMARY KEY(id),
                 INDEX(url(255)),
                 CONSTRAINT contacts_unique UNIQUE (url)
             )
 '''
-cursor.execute(sql)
-connection.commit()
-connection.close()
+try:
+    cursor.execute(sql)
+    connection.commit()
+    print("데이터베이스 테이블 생성 완료")
+except:
+    print("테이블 생성 실패")
+    pass
+finally:
+    connection.close()
