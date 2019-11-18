@@ -87,7 +87,7 @@ services:
   logstash:
     image: docker.elastic.co/logstash/logstash:7.3.2
     container_name: logstash
-    command: /bin/sh -c "touch /usr/share/last_run_metadata/jdbc-int-sql_last_value.yml && bin/logstash"
+    command: /bin/sh -c "touch /usr/share/last_run_metadata/jdbc-int-sql_last_value.yml && chmod +x /usr/share/last_run_metadata/jdbc-int-sql_last_value.yml && bin/logstash"
     volumes:
       - ./docker/logstash/last_run_metadata/:/usr/share/last_run_metadata/ #jdbc 로그 저장 경로
       - ./docker/logstash/pipeline/:/usr/share/logstash/pipeline/
