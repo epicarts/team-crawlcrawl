@@ -1,5 +1,5 @@
 echo "success entrypoint.sh!!!!!"
-dockerize -wait tcp://db:3306 -wait http://elasticsearch:9200 -timeout 30s
+dockerize -wait tcp://db:3306 -wait http://elasticsearch:9200 -timeout 50s
 echo "start!! crawling image!!!!"
 
 python create_logstash_db.py
