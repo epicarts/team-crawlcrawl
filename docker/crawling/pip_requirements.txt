@@ -4,3 +4,4 @@ twitterscraper==1.4.0
 tweepy==3.8.0
 pymysql==0.9.3
 cryptography
+konlpy
