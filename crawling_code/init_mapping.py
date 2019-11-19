@@ -46,7 +46,7 @@ def create_analysis_index():
                     "author": {"type": "text", "index": "false" }, #작성자
                     "post_create_datetime": {"type":"date"},#, "format":"yyyy-MM-dd HH:mm:ss"}, #글 작성시간 "2019-11-13 22:09:00"
                     "title": {"type": "text", "analyzer": "nori_analyzer"},# 제목
-                    "contents": {"type": "text", "analyzer": "nori_analyzer"}, #글 내용
+                    "content": {"type": "text", "analyzer": "nori_analyzer"}, #글 내용
                     "url":{"type": "text", "index": "false"},#글 URL
                     "publisher": {"type": "keyword"}, #글 출처 출판사(보안뉴스, 트위터 등)
                     "tag": {"type": "keyword"},#추후 태그
