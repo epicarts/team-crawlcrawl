@@ -57,7 +57,7 @@ if __name__ == '__main__':
     https://twitter.com/kisa118 
     the_boan
     '''
-    user_list = ["kisa118", "the_boan"]#수집할 트위터 유저 리스트
+    user_list = ["kisa118", "the_boan", "softwarecatalog"]#수집할 트위터 유저 리스트
     for user in user_list:
         lately_twitter_limit = 5
 
