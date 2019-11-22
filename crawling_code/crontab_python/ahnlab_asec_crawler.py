@@ -75,11 +75,11 @@ def ahnlab_crawl(r2):
         content = content + '\n' + line2.text
   
     if content == '':
-        print('없어')
+        #print('없어')
         for line2 in r2.html.find(tag_selector2):
             content = content + '\n' + line2.text
     else :
-        print('있어')
+        #print('있어')
 
     #print('content:', content)
 
@@ -133,10 +133,10 @@ if __name__ == '__main__':
 
                 #try except, 중간에 파싱결과 오류나면 pass하고 다음거..
                 try:
-                    print('1번')
+                    #print('1번')
                     json_data = ahnlab_crawl(r2)# 수집한 데이터를 입맞대로 가공.
                             #sql query문으로 삽입
-                    print('2번')
+                    #print('2번')
                     sql = "INSERT INTO raw_table (title, author, content, url, publisher, post_create_datetime) VALUES (%s, %s, %s, %s, %s, %s)"
                     val = (json_data['title'], json_data['author'], json_data['content'], json_data['url'], json_data['publisher'], tweet.timestamp)
                     query_mydb(sql=sql, val=val)
@@ -147,7 +147,4 @@ if __name__ == '__main__':
 
         else:
             print('url 엄서요')
-
-
-        
     print("안랩 ASEC 수집 완료")
