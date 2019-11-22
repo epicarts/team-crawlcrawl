@@ -22,7 +22,7 @@ sql = '''
                 content TEXT(65535) NOT NULL,
                 url VARCHAR(255) DEFAULT NULL,
                 publisher VARCHAR(255) NOT NULL,
-                tag VARCHAR(255) DEFAULT false,
+                tag VARCHAR(255) DEFAULT NULL,
                 post_create_datetime TIMESTAMP,
                 modification_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 insertion_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
