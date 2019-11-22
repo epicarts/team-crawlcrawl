@@ -78,12 +78,10 @@ def ahnlab_crawl(r2):
         #print('없어')
         for line2 in r2.html.find(tag_selector2):
             content = content + '\n' + line2.text
-    else :
+    #else:
         #print('있어')
 
     #print('content:', content)
-
-    
     file_data = OrderedDict()
     file_data['author'] = 'AhnLab'
     file_data['title'] = news_title
@@ -91,8 +89,6 @@ def ahnlab_crawl(r2):
     file_data['url'] = r2.url
     file_data['publisher'] = 'AhnLab'
     return file_data
-
-
 
 #일자 별로 수집하는 코드
 #enddate = dt.date.today() + dt.timedelta(days=1) # 하루 뒤를 더해 줘야함. 안그러면 시차 때문에 최근 글을 불러오지 못함.
@@ -144,7 +140,6 @@ if __name__ == '__main__':
                 except:
                     print("예외 발생.")
                     pass
-
         else:
             print('url 엄서요')
     print("안랩 ASEC 수집 완료")
