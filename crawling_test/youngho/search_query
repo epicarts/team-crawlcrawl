@@ -1,0 +1,14 @@
+GET analysis/_search
+{
+  "query": {
+    "match": {
+      "content":"홈플러스 고객 4만 9,000명의 개인정보가 유출된 사실이 드러나 방송통신위원회와 한국인터넷진흥원이 조사에 착수했다."
+    }
+  }
+}
+
+
+POST /analysis/_update/4
+{
+  "doc": { "tag": "#문장 #네모 #배고픔" }
+}
