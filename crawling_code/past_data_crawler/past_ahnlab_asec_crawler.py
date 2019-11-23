@@ -124,10 +124,10 @@ if __name__ == '__main__':
                 #print("Already Exists url")
             else:   # 해당 URL이 없으면 크롤링 후 삽입하기.
                 session = HTMLSession()
-                r2 = session.get(ahnlab_url)
 
                 #try except, 중간에 파싱결과 오류나면 pass하고 다음거..
                 try:
+                    r2 = session.get(ahnlab_url)
                     #print('1번')
                     json_data = ahnlab_crawl(r2)# 수집한 데이터를 입맞대로 가공.
                             #sql query문으로 삽입
