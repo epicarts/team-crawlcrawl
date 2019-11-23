@@ -43,7 +43,7 @@ def create_analysis_index():
         "mappings": {
             "doc":{
                 "properties": {
-                    "author": {"type": "text", "index": "false" }, #작성자
+                    "author": {"type": "text"}, #작성자
                     "post_create_datetime": {"type":"date"},#, "format":"yyyy-MM-dd HH:mm:ss"}, #글 작성시간 "2019-11-13 22:09:00"
                     "title": {"type": "text", "analyzer": "nori_analyzer"},# 제목
                     "content": {"type": "text", "analyzer": "nori_analyzer"}, #글 내용
