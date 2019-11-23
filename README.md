@@ -14,7 +14,7 @@ sudo apt-get update
 
 * Docker 설치하기
 ```sh
-`sudo apt-get install docker-ce`
+sudo apt-get install docker-ce
 ```
 
 * docker-compose 설치하기
