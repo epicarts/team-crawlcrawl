@@ -16,8 +16,10 @@ sudo apt-get update
 `sudo apt-get install docker-ce`
 
 * docker-compose 설치하기
-`sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose`
-`sudo chmod +x /usr/local/bin/docker-compose`
+```sh
+sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+```
 
 # **docker-compose-elasticsearch-kibana-crawling**
 * elasticsearch == 7.3.2
