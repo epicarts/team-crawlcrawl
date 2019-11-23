@@ -2,6 +2,7 @@
 2019 캡스톤 디자인 깃허브 페이지
 
 # **docker 설치**
+* 운영체제: Ubuntu Server 18.04 LTS (HVM), SSD Volume Type
 * 설치 사전 준비
 ```sh
 sudo apt-get update
