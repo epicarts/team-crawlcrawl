@@ -123,7 +123,7 @@ if __name__ == '__main__':
             try:
                 json_data = kisa_crawl(r2)# 수집한 데이터를 입맞대로 가공.
                         #sql query문으로 삽입
-                print('1')
+                #print('1')
                 sql = "INSERT INTO raw_table (title, author, content, url, publisher, post_create_datetime) VALUES (%s, %s, %s, %s, %s, %s)"
                 val = (json_data['title'], json_data['author'], json_data['content'], json_data['url'], json_data['publisher'], json_data['post_create_datetime'])
                 query_mydb(sql=sql, val=val)
