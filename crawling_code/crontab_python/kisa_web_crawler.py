@@ -130,5 +130,5 @@ if __name__ == '__main__':
             except:
                 print("예외 발생.")
                 pass
-    print("보안뉴스 웹사이트 수집 완료")
+    print("KISA 웹사이트 수집 완료")
 
