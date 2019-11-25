@@ -32,15 +32,16 @@ es.indices.refresh(index=index_name)
 
 
 # 상품명에 '노트북'을 검색한다
-results = es.search(index=index_name, body={'query':{'match':{'goods_name':'노트북'}}})
+index = input("검색할 이름:")
+results = es.search(index=index_name, body={'query':{'match':{'goods_name':index}}})
 #print('\n')
 ppr.pprint(results)
 #hits : 응답 데이터 정보 (* 검색결과 데이터는 hits > hits > _source 안에 데이터가 있다.)
 for result in results['hits']['hits']:
-    print( 'source:', result['_source'])
+    print( 'source:', result['_source']['goods_name'])
 print('\n')
 #조회
-doc = es.get(index = index_name,doc_type = 'string',id=1)
-print(doc)
+#doc = es.get(index = index_name,doc_type = 'string',id=1)
+#print(doc)
 #print json.dumps(doc, indent = 2)
 

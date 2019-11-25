@@ -9,12 +9,12 @@ raw_index_name = "raw"
 raw_doc_type = "twitter"
 index_name = "analysis"
 doc_type = "doc"
-es = Elasticsearch("http://127.0.0.1:9200/")  #localhost = 127.0.0.1:9200
+es = Elasticsearch("http://54.180.87.34:9200")  #localhost = 127.0.0.1:9200
 
 
-results = es.search(index=index_name, body={'query':{'match':{'tag':'태그'}}})
+results = es.search(index=index_name, body={'query':{'match':{'author':'한국인터넷진흥원'}}})
 
 for result in results['hits']['hits']:
-    print( 'source:', result['_source']['author'])
-	print( 'source:', result['_source']['timestamp'])
-	print("\n")
+	print( 'source:', result['_source']['title'])
+	#print( 'source:', result['_source']['timestamp'])
+	#print("\n")

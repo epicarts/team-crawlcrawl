@@ -63,6 +63,9 @@ def news_crawl(r2):
 	'''
 	raw_insert_data = raw_insert(raw_index_name, raw_doc_type, body=json_data)   #raw_data
     
+	an_data = raw_insert_data['hits']['hits']['_source']['html']
+	print(an_data)
+	
 	url_twitter = r2.url                 #보안뉴스 기사의 url
 
     #제목, 날짜, 내용, 작성자 별로 크롤링 하여 변수 저장 및 출력
