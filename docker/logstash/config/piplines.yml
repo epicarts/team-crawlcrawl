@@ -1,0 +1,9 @@
+# This file is where you define your pipelines. You can define multiple.
+# For more information on multiple pipelines, see the documentation:
+#   https://www.elastic.co/guide/en/logstash/current/multiple-pipelines.html
+- pipeline.id: main
+  path.config: "/usr/share/logstash/pipeline"
+
+pipline.batch.size: 10 # 혹시모를 메모리 문제 때문에 낮게.. 기본 125
+
+#pipline.workers: 2 #CPU 할당

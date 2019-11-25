@@ -1,0 +1,2 @@
+- 이 폴더에 있는 python 코드들은 기본적으로 crontab 기능과 연동되어 있음. 
+- 파일이름 수정 및 추가시 /docker/crawling/cron_config 에 추가시켜야 도커에서 정상적으로 동작함.

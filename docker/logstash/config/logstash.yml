@@ -1,0 +1,5 @@
+http.host: "0.0.0.0"
+#xpack.monitoring.elasticsearch.hosts: [ "http://elasticsearch:9200" ]
+
+config.reload.automatic: true #변경된 config 파일을 자동으로 설정 감지
+config.reload.interval: 3s # 3초 마다 체크
