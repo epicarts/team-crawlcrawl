@@ -130,7 +130,10 @@ if __name__ == '__main__':
             else:# 해당 URL이 없으면 크롤링 후 삽입하기.
                 session = HTMLSession()
                 r2 = session.get(news_url)  # 세션 열고 수집.
-                r2.html.render()
+                try:
+                    r2.html.render()
+                except:
+                    pass
 
                 #try except, 중간에 파싱결과 오류나면 pass하고 다음거..
                 try:

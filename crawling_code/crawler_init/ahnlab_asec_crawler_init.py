@@ -61,7 +61,10 @@ def ahnlab_crawl(r2):
     '''
     안랩 asec의 데이터를 추출해서 json 형태로 리턴함.
     '''
-    r2.html.render()
+    try:
+        r2.html.render()
+    except:
+        pass
     tag_selector = 'body > div#wrap > section#container > div.content-wrap > article#content > div.inner > div.entry-content > p'
     tag_selector2 = 'body > div#wrap > section#container > div.content-wrap > article#content > div.inner > div.entry-content > div.tt_article_useless_p_margin > p'
     
