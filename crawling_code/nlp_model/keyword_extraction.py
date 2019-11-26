@@ -98,7 +98,7 @@ def morp_d(token_data):
             text = nltk.Text(token_data[i][2], name='NMSC')
             keywords.insert(i, text.vocab().most_common(3))   # 빈도 수 상위 3 단어를 키워드(태그)로 지정
         except:
-            print(token_data[i][1], token_data[i][2])
+            #print(token_data[i][1], token_data[i][2])
             pass
 
     # for i in range(0, len(token_data)):
