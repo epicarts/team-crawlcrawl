@@ -14,7 +14,6 @@ import pymysql
 date_sel = 'html > body > div#wrapper > div#container > div#content > div#con_area > table.board_Vtable > thead > tr > td > ul > li'
 from_sel = 'html > body > div#wrapper > div#container > div#content > div#con_area > table.board_Vtable > tbody > tr > td > div.board_content > p > a > span'
 
-
 def query_mydb(sql, val=None):
     '''
         sql = "INSERT INTO raw_table (title, URL) VALUES('뉴스 제목', 'http://google.com')"
@@ -61,6 +60,7 @@ def select_mydb(sql, val=None):
     return result
 
 
+
 #웹페이지의 데이터를 추출해서 json 형태로 리턴함.
 def isaa_crawl(r2):
 
@@ -100,6 +100,7 @@ def isaa_crawl(r2):
     for line2 in r2.html.find(from_sel):
         if len(line2.text)>20:
             raw_url = line2.text
+            re_url = line2.text
             print('원문 url: ', raw_url)
 
 
@@ -111,7 +112,7 @@ def isaa_crawl(r2):
     file_data['post_create_datetime'] = date # 2015-01-01 12:10:00
     file_data['title'] = news_title
     file_data['content'] = content
-    file_data['url'] = raw_url
+    file_data['url'] = r2.url
     file_data['publisher'] = publisher
     return file_data
 
@@ -120,12 +121,11 @@ if __name__ == '__main__':
     isaa_url = 'http://isaa.re.kr/index.php?pg=1&page=list&hCode=BOARD&bo_idx=4&sfl=&stx='
     url_sel = 'body > div#wrapper > div#container > div#content > div#con_area > div#con_area > form > table.board_table > tbody > tr > td.alignLeft> a'
     
-    r = session.get(isaa_url)   #세션 열고 수집   
+    r = session.get(isaa_url)   #세션 열고 수집  
 
     for line in r.html.find(url_sel):
         news_url = 'http://isaa.re.kr/index.php'+line.attrs['href']
         #print('new_url:', news_url)
-
 
         #SQL에서 URL 중복 체크
         sql = "select EXISTS (select * from raw_table WHERE url=%s) as success"
@@ -134,7 +134,8 @@ if __name__ == '__main__':
 
         if is_exists: # 해당 URL이 있으면 패스 
             continue
-            #print("Already Exists url")
+            print("중복중복!")
+            
         else:# 해당 URL이 없으면 크롤링 후 삽입하기.
             session = HTMLSession()
             r2 = session.get(news_url)  # 세션 열고 수집.
