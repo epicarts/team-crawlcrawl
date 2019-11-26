@@ -86,23 +86,20 @@ def morp_d(token_data):
             #추가: 안하면 komoran.nouns에서 오류가 남.
             token_data[i][1] = preprocess(token_data[i][1])#알파벳이나, 특수문자, 엔터키 제거.
             token_data[i][2] = preprocess(token_data[i][2])#알파벳이나, 특수문자, 엔터키 제거. 
+            token_data[i][1] = komoran.nouns(token_data[i][1])
+            token_data[i][2] = komoran.nouns("\n".join([s for s in token_data[i][2].split("\n") if s]))   # komoran은 공백에서 오류 발생, 공백 제거
+                    words = []
+            for word in token_data[i][2]:   # 한 글자 단어 or 불용어 제거
+                if ((len(word) == 1) or (word in stop_words)):
+                    continue
+                words.append(word)
+
+            token_data[i][2] = words
+            text = nltk.Text(token_data[i][2], name='NMSC')
+            keywords.insert(i, text.vocab().most_common(3))   # 빈도 수 상위 3 단어를 키워드(태그)로 지정
         except:
             print(token_data[i][1], token_data[i][2])
-
-        token_data[i][1] = komoran.nouns(token_data[i][1])
-        token_data[i][2] = komoran.nouns("\n".join([s for s in token_data[i][2].split("\n") if s]))   # komoran은 공백에서 오류 발생, 공백 제거
-
-        words = []
-
-        for word in token_data[i][2]:   # 한 글자 단어 or 불용어 제거
-            if ((len(word) == 1) or (word in stop_words)):
-                continue
-            words.append(word)
-
-        token_data[i][2] = words
-        text = nltk.Text(token_data[i][2], name='NMSC')
-        keywords.insert(i, text.vocab().most_common(3))   # 빈도 수 상위 3 단어를 키워드(태그)로 지정
-
+            pass
 
     # for i in range(0, len(token_data)):
     #     print('ID: ', token_data[i][0],'\n')
