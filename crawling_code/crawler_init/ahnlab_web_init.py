@@ -111,7 +111,10 @@ if __name__ == '__main__':
     
         r = session.get(ahnlab_url)
         #print(ahnlab_url)
-        r.html.render()   
+        try:
+            r2.html.render()
+        except:
+            pass
 
         for line in r.html.find('input.secuNewsSeq'):
             value = line.attrs['value']

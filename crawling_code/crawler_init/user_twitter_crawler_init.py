@@ -77,7 +77,7 @@ if __name__ == '__main__':
                 dict_data['title'] = tweet.text[:255]
                 dict_data['content'] = tweet.text
                 dict_data['url'] = tweet.tweet_url
-                dict_data['publisher'] = 'twitter'
+                dict_data['publisher'] = user+'_twitter'
                 try:
                     sql = "INSERT INTO raw_table (title, author, content, url, publisher, post_create_datetime) VALUES (%s, %s, %s, %s, %s, %s)"
                     val = (dict_data['title'], dict_data['author'], dict_data['content'], dict_data['url'], dict_data['publisher'], dict_data['post_create_datetime'])
