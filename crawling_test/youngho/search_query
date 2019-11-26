@@ -12,3 +12,16 @@ POST /analysis/_update/4
 {
   "doc": { "tag": "#문장 #네모 #배고픔" }
 }
+
+
+POST /analysis/_analyze
+{
+    "analyzer":"nori_analyzer",
+    "text":"다크웹에 대해서 알고 있는 사람들은 그리 많지 않다."
+}
+
+
+POST /analysis/_analyze
+{
+    "text":"다크웹에 대해서 알고 있는 사람들은 그리 많지 않다."
+}
