@@ -119,14 +119,17 @@ if __name__ == '__main__':
         false_tags_list = list(map(list, false_tags))#데이터베이스에서 가져올 때 튜플형식으로 가져오기 때문에 리스트로 변환
         token_data, keywords = morp_d(false_tags_list)#token_data: 각 토큰들에 대한 데이터들 / keyword: 키워드 리스트 [('보안', 4), ('업데이트', 3), ('권고', 3)]
 
-        for i in range(0, len(token_data)):
-            sql_id = token_data[i][0]#데이터 베이스 id 값
-            sql_tags_list = [keyword for keyword, count in keywords[i]]# [('보안', 4), ('업데이트', 3), ('권고', 3)] => ["보안", "업데이트", 권고"]
-            sql_tags = ' '.join(sql_tags_list)#["보안", "업데이트", 권고"] => '보안 업데이트 권고'
+        try:
+            for i in range(0, len(token_data)):
+                sql_id = token_data[i][0]#데이터 베이스 id 값
+                sql_tags_list = [keyword for keyword, count in keywords[i]]# [('보안', 4), ('업데이트', 3), ('권고', 3)] => ["보안", "업데이트", 권고"]
+                sql_tags = ' '.join(sql_tags_list)#["보안", "업데이트", 권고"] => '보안 업데이트 권고'
 
-            #데이터 베이스에 넣기.
-            sql = "UPDATE raw_table SET tag='%s' WHERE ID=%s" % (sql_tags, sql_id)
-            query_mydb(sql=sql)
+                #데이터 베이스에 넣기.
+                sql = "UPDATE raw_table SET tag='%s' WHERE ID=%s" % (sql_tags, sql_id)
+                query_mydb(sql=sql)
+        except:
+            pass
         print("키워드(태그) 붙이기 완료 되었습니다.")
     else:
         print("키워드(태그)를 붙일 데이터가 없습니다.")
