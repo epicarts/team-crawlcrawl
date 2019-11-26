@@ -88,7 +88,7 @@ def morp_d(token_data):
             token_data[i][2] = preprocess(token_data[i][2])#알파벳이나, 특수문자, 엔터키 제거. 
             token_data[i][1] = komoran.nouns(token_data[i][1])
             token_data[i][2] = komoran.nouns("\n".join([s for s in token_data[i][2].split("\n") if s]))   # komoran은 공백에서 오류 발생, 공백 제거
-                    words = []
+            words = []
             for word in token_data[i][2]:   # 한 글자 단어 or 불용어 제거
                 if ((len(word) == 1) or (word in stop_words)):
                     continue
