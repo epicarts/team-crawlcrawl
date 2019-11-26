@@ -103,7 +103,7 @@ if __name__ == '__main__':
     page = 1
 
     while(1):
-        if page == 50:
+        if page == 20:
             break
 
         ahnlab_url = 'https://www.ahnlab.com/kr/site/securityinfo/secunews/secuNewsList.do?curPage='+str(page)+'&menu_dist=1&seq=&key=&dir_group_dist=&dir_code=&searchDate='

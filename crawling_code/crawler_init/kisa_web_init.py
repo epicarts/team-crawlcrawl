@@ -103,7 +103,7 @@ if __name__ == '__main__':
     page = 1
 
     while(1):
-        if page == 50:
+        if page == 20:
             break
         
         kisa_url = 'https://www.krcert.or.kr/data/trendList.do?page='+str(page)+'&sort_code=&search_sort=title_name&search_word='

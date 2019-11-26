@@ -106,7 +106,7 @@ if __name__ == '__main__':
     page = 1
     
     while(1):
-        if page == 50:
+        if page == 20:
             break
 
         boannews_url = 'https://www.boannews.com/media/s_list.asp?Page='+str(page)+'&search=&mkind=&kind=&skind=5&find='

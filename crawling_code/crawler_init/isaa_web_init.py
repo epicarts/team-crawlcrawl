@@ -123,7 +123,7 @@ if __name__ == '__main__':
     page = 1
 
     while(1):
-        if page == 50:
+        if page == 20:
             break
 
         isaa_url = 'http://isaa.re.kr/index.php?pg='+str(page)+'&page=list&hCode=BOARD&bo_idx=4&sfl=&stx='
