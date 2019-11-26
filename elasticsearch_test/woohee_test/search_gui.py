@@ -10,7 +10,7 @@ from tkinter import ttk
 index_name = "analysis"
 doc_type = "doc"
 
-es = Elasticsearch("http://15.164.210.19:9200")
+es = Elasticsearch("http://crawlcrawl.com:9200")
 
 def content_print():
     print ("content select")
