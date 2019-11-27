@@ -16,7 +16,7 @@ content_sel = 'body > div.wrap > div#container > form#secuNewsViewForm > div.con
 
 def query_mydb(sql, val=None):
     '''
-        sql = "INSERT INTO raw_table (title, URL) VALUES('뉴스 제목', 'http://google.com')"
+        sql = "INSERT INTO test_table (title, URL) VALUES('뉴스 제목', 'http://google.com')"
     '''
     mysql_ip = os.getenv('MYSQL_HOST','localhost')
 
@@ -38,7 +38,7 @@ def query_mydb(sql, val=None):
 
 def select_mydb(sql, val=None):
     '''
-        sql = "SELECT * FROM raw_table WHERE id=5"
+        sql = "SELECT * FROM test_table WHERE id=5"
     '''
     mysql_ip = os.getenv('MYSQL_HOST','localhost')
 
@@ -60,11 +60,12 @@ def select_mydb(sql, val=None):
     return result
 
 
+content = ''
 #보안 뉴스 웹페이지의 데이터를 추출해서 json 형태로 리턴함.
 def ahnlab_crawl(r2):
 
     url = r2.url
-    #print(url)
+    print('url: ', url)
 
     
     for line2 in r2.html.find('h1.tit'):
@@ -103,7 +104,7 @@ if __name__ == '__main__':
     page = 1
 
     while(1):
-        if page == 20:
+        if page == 116:
             break
 
         ahnlab_url = 'https://www.ahnlab.com/kr/site/securityinfo/secunews/secuNewsList.do?curPage='+str(page)+'&menu_dist=1&seq=&key=&dir_group_dist=&dir_code=&searchDate='
@@ -111,15 +112,12 @@ if __name__ == '__main__':
     
         r = session.get(ahnlab_url)
         #print(ahnlab_url)
-        try:
-            r2.html.render()
-        except:
-            pass
+        r.html.render()   
 
         for line in r.html.find('input.secuNewsSeq'):
             value = line.attrs['value']
             news_url = 'https://www.ahnlab.com/kr/site/securityinfo/secunews/secuNewsView.do?curPage='+str(page)+'&menu_dist=1&seq='+value+'&key=&dir_group_dist=&dir_code=&searchDate='
-            print('news_url:', news_url)
+            #print('news_url:', news_url)
 
 
             #SQL에서 URL 중복 체크
@@ -127,27 +125,28 @@ if __name__ == '__main__':
             val = (news_url)
             is_exists = select_mydb(sql, val)[0][0] # ture: 1 / false: 0 반환
 
-            if is_exists: # 해당 URL이 있으면 패스 
+            if is_exists: # 해당 URL이 있으면 패스
+                print("Already Exists url") 
                 continue
                 #print("Already Exists url")
             else:# 해당 URL이 없으면 크롤링 후 삽입하기.
                 session = HTMLSession()
                 r2 = session.get(news_url)  # 세션 열고 수집.
-                try:
-                    r2.html.render()
-                except:
-                    pass
+                r2.html.render()
 
                 #try except, 중간에 파싱결과 오류나면 pass하고 다음거..
                 try:
                     json_data = ahnlab_crawl(r2)# 수집한 데이터를 입맞대로 가공.
                             #sql query문으로 삽입
-                    sql = "INSERT INTO raw_table (title, author, content, url, publisher, post_create_datetime) VALUES (%s, %s, %s, %s, %s, %s)"
-                    print('2')
-                    val = (json_data['title'], json_data['author'], json_data['content'], json_data['url'], json_data['publisher'], json_data['post_create_datetime'])
-                    print('3')
-                    query_mydb(sql=sql, val=val)
-                    print('4')
+                    if json_data['content'] == '':
+                        #query_mydb(sql=sql, val=val)
+                        print('내요없음')
+                        continue
+                    else:
+                        sql = "INSERT INTO raw_table (title, author, content, url, publisher, post_create_datetime) VALUES (%s, %s, %s, %s, %s, %s)"
+                        val = (json_data['title'], json_data['author'], json_data['content'], json_data['url'], json_data['publisher'], json_data['post_create_datetime'])
+                    
+                        query_mydb(sql=sql, val=val)
                 except:
                     print("예외 발생.")
                     pass
