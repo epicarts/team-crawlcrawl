@@ -128,12 +128,15 @@ if __name__ == '__main__':
             try:
                 json_data = ahnlab_crawl(r2)# 수집한 데이터를 입맞대로 가공.
                         #sql query문으로 삽입
-                sql = "INSERT INTO raw_table (title, author, content, url, publisher, post_create_datetime) VALUES (%s, %s, %s, %s, %s, %s)"
-                print('2')
-                val = (json_data['title'], json_data['author'], json_data['content'], json_data['url'], json_data['publisher'], json_data['post_create_datetime'])
-                print('3')
-                query_mydb(sql=sql, val=val)
-                print('4')
+                if json_data['content'] == '':
+                        #query_mydb(sql=sql, val=val)
+                        print('내요없음')
+                        continue
+                else:
+                    sql = "INSERT INTO raw_table (title, author, content, url, publisher, post_create_datetime) VALUES (%s, %s, %s, %s, %s, %s)"
+                    val = (json_data['title'], json_data['author'], json_data['content'], json_data['url'], json_data['publisher'], json_data['post_create_datetime'])
+                    
+                    query_mydb(sql=sql, val=val)
             except:
                 print("예외 발생.")
                 pass
