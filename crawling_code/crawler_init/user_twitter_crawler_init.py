@@ -57,7 +57,7 @@ if __name__ == '__main__':
     https://twitter.com/kisa118 
     the_boan
     '''
-    user_list = ["kisa118", "the_boan", "softwarecatalog"]#수집할 트위터 유저 리스트
+    user_list = ["kisa118", "softwarecatalog"]#수집할 트위터 유저 리스트, "the_boan"
     for user in user_list:
 
         list_of_tweets = query_tweets_from_user(user=user)#특정 유저의 모든 데이터를 수집.
