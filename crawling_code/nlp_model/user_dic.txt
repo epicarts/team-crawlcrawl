@@ -9,6 +9,14 @@
 비주얼 스튜디오 NNG
 다운로더    NNG
 보안	NNG
-다크웹  NNG
+다크웹	NNG
 비밀번호 NNG
 비트코인 NNG
+업비트 NNG
+빅데이터    NNG
+악성코드    NNG
+카스퍼스키  NNG
+포렌식  NNG
+사물인터넷  NNG
+디지털포렌식  NNG
+스마트팩토리  NNG
