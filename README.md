@@ -1,5 +1,6 @@
 # team-crawlcrawl
-2019 캡스톤 디자인 깃허브 페이지
+* 2019 캡스톤 디자인 깃허브 페이지
+* 여러 보안뉴스 사이트에서 자동으로 페이지를 크롤링하여, 엘라스틱서치에 저장 후 키바나로 시각화
 
 # **docker 설치**
 * 운영체제: Ubuntu Server 18.04 LTS (HVM), SSD Volume Type
