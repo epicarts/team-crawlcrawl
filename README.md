@@ -57,10 +57,12 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 ### 2.1 git clone
 `git clone https://github.com/epicarts/team-crawlcrawl.git` 깃허브에서 폴더 복제
+
 `cd team-crawlcrawl/` 다운 받은 폴더로 이동
 
 ### 2.2 권한 및 메모리 셋팅
 `sudo sysctl -w vm.max_map_count=262144` 엘라스틱서치 사용을 위한 메모리 셋팅
+
 `sudo chown 1000:1000 -R ./docker/logstash/last_run_metadata/` 로그스태쉬 파일 기록을 위한 권한 셋팅
 
 ### 2.3 Docker-compose 빌드 및 실행
