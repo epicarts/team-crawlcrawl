@@ -3,8 +3,6 @@
 
 몇몇의 보안뉴스 사이트에서 자동으로 페이지를 크롤링하여, 엘라스틱서치에 저장 후 키바나로 시각화하였습니다.
 
-Screenshots
---------
 ![kibana](https://user-images.githubusercontent.com/17478634/73137801-6fecf780-409f-11ea-9dd2-98edc122db62.PNG)
 
 
@@ -27,10 +25,10 @@ Screenshots
 	5. Kibana를 통해서 ElasticSearh에 저장된 데이터를 시각화 
 	6. 웹페이지를 통해 사용자에게 검색 서비스 제공(미구현)
 
+
 # 실행 방법
-## 1. **docker 설치**
 * 운영체제: Ubuntu Server 18.04 LTS (HVM), SSD Volume Type
-* 설치 사전 준비
+## 1. 설치 사전 준비
 ```sh
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
@@ -39,12 +37,12 @@ sudo apt-key fingerprint 0EBFCD88
 sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 sudo apt-get update
 ```
-
-* Docker 설치하기
+## 2. Docker 설치하기
 ```sh
 sudo apt-get install docker-ce
 ```
 
+## 3. Docker-compose 설치하기
 * docker-compose 설치하기
 ```sh
 sudo curl -L "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
