@@ -8,9 +8,27 @@ Screenshots
 ![kibana](https://user-images.githubusercontent.com/17478634/73137801-6fecf780-409f-11ea-9dd2-98edc122db62.PNG)
 
 
-# 개발환경
+## 개발환경
+> Docker 를 사용하여 환경 구성
 
-# **docker 설치**
+* logstash == 7.3.2
+* elasticsearch == 7.3.2
+* kibana == 7.3.2
+* python == 3.6.8
+* mysql == 8.0.18
+
+## 프로젝트 구성도
+![flowchart](https://user-images.githubusercontent.com/17478634/73138072-ee4a9900-40a1-11ea-8d69-46f2fddff5f8.PNG)
+### 순서
+	1. 뉴스 데이터를 일정시간 마다 자동으로 데이터 크롤링
+	2. 수집한 데이터를 MySQL에 저장.
+	3. MySQL에 저장된 뉴스 데이터에서 키워드 3개 추출 후 다시 MySQL에 저장. 
+	4. Logstash를 사용하여 MySQL 데이터를 ElasticSearch에 저장
+	5. Kibana를 통해서 ElasticSearh에 저장된 데이터를 시각화 
+	6. 웹페이지를 통해 사용자에게 검색 서비스 제공(미구현)
+
+# 실행 방법
+## 1. **docker 설치**
 * 운영체제: Ubuntu Server 18.04 LTS (HVM), SSD Volume Type
 * 설치 사전 준비
 ```sh
@@ -34,9 +52,7 @@ sudo chmod +x /usr/local/bin/docker-compose
 ```
 
 # **docker-compose-elasticsearch-kibana-crawling**
-* elasticsearch == 7.3.2
-* python == 3.6.8
-* kibana == 7.3.2
+
 
 # **docker-compose command**
 `docker-compose up`
@@ -54,3 +70,6 @@ sudo chmod +x /usr/local/bin/docker-compose
 # **nori analyzer**
 - 한국에 분석 플러그인 노리(nori)
 - userdict_ko.txt에 원하는 단어를 추가 시킬 수 있다. (docker-compose.yml 파일 참고)
+
+# Kibana Dashboard 셋팅법
+- 블로그 참고: 
