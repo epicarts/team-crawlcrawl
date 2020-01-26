@@ -16,7 +16,7 @@
 * mysql == 8.0.18
 
 ## 프로젝트 구성도
-<img src="![flowchart](https://user-images.githubusercontent.com/17478634/73138072-ee4a9900-40a1-11ea-8d69-46f2fddff5f8.PNG)" width="450px" height="300px" title="px(픽셀) 크기 설정" alt="RubberDuck"></img><br/>
+<img src="https://user-images.githubusercontent.com/17478634/73138072-ee4a9900-40a1-11ea-8d69-46f2fddff5f8.PNG" width="450px" height="300px" ></img><br/>
 
 
 ### 순서
