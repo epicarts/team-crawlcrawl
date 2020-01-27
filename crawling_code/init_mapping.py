@@ -59,10 +59,7 @@ def create_analysis_index():
 
 try:
     create_analysis_index()
-    print("엘라스틱서치 맵핑 성공")
+    print("Success, Elasticsearch mapping")
 except:
-    print("엘라스틱서치 맵핑 실패")
+    print("Error, Ealsticsearch mapping")
     pass
-
-# index 삭제 코드
-#es.indices.delete(index = "analysis", ignore=[400, 404])

@@ -14,6 +14,11 @@ import re
 3. 각각 id 값을 기준으로 다시 데이터베이스 tag 필드에 넣음.
 
 * LOGSTASH랑 엮어서 쓰므로 주의 필요
+
+추가 설명
+1. 키워드 추출은 빈도수 기준으로 추출
+2. stop_words.txt은 제외할 단어 목록
+3. user_dic.txt는 사용자 단어 목록 
 '''
 
 def select_mydb(sql, val=None):

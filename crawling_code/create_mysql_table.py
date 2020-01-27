@@ -13,7 +13,6 @@ connection = pymysql.connect(
     charset='utf8mb4')
 
 cursor = connection.cursor()
-#URL 인덱싱 하기. (검색 속도 증가..!)
 sql = '''
             CREATE TABLE raw_table (
                 id INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -35,9 +34,9 @@ sql = '''
 try:
     cursor.execute(sql)
     connection.commit()
-    print("데이터베이스 테이블 생성 완료")
+    print("Create database table")
 except:
-    print("테이블 생성 실패")
+    print("Can't create database table")
     pass
 finally:
     connection.close()

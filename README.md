@@ -69,6 +69,13 @@ sudo chmod +x /usr/local/bin/docker-compose
 ### 2.3 Docker-compose 빌드 및 실행
 `sudo docker-compose up --build` 도커 컴포즈 실행 및 빌드
 
+## 3. kibana 접속
+### 3.1 kibana
+모든 도커 서비스가 정상적으로 가동되면 kibana 통해 웹페이지를 통해 접속 할 수 있다.
+
+Docker-compose 에서 기존 `5601 port` 에서 `80 port`로 변경을 하였기 떄문에 로컬 환경에서 웹브라우저를 사용해 `127.0.0.1` 로 접속할 수 있다.(Chrome 권장) 
+
+
 ---------------------------------------
 # Docker 상세 설명
 > 각 도커 서비스 별로 추가적인 설명
@@ -78,55 +85,77 @@ crwling + elasticsearch + logstash + kibana + mysql
 
 ## 1. crawling
 ### 1.1 기본 정보
-> 파이썬 도커 이미지를 기반으로 만들어져 있으며, 
+> python을 기반으로 데이터 자동 수집과 디비 생성, 엘라스틱서치 맵핑 역할 수행
 * Dockerfile 파일: `docker/crawling/Dockerfile`
 * 설정 폴더: `docker/crawling/`
-* python 3.6.8
-
+* `python 3.6.8`
 ### 1.2 entrypoint.sh
-- entrypoint.sh: 도커 실행시 docker-compose.yml 의 command 에서 시작하게 설정 및 volume에 추가 시켜 놓음.
-- create_logstash_db.py init_mapping.py  파일을 자동으로 시작하게 설정되어 있음.
-- dockerize -wait tcp://db:3306 -wait http://elasticsearch:9200 -timeout 50s.  <<---- dockerfile 안에 셋팅 및 다운로드 시켜놓았기 때문에 동작함.
-- init_mapping.py와 create_logstash_db는 기본적으로 실행하는데 오랜 시간이 걸리는데, 이 때문에 50초동안 실행 대기하게 해놓음.
-### 1.3 DOCKERIZE
+> cron 기능을 사용하기 위한 권한 설정 및 다른 컨테이너와 종속성을 위해 만든 sh 파일
+* create_mysql_table.py init_mapping.py  파일을 자동으로 시작하게 설정되어 있음.
+* `dockerize -wait tcp://db:3306 -wait http://elasticsearch:9200 -timeout 50s.` 다른 컨테이너내의 서비스가 실행되기 기다림.
+* init_mapping.py와 create_mysql_table는 기본적으로 실행하는데 오랜 시간이 걸리는데, 이 때문에 50초동안 실행 대기하게 해놓음.
+### 1.3 DOCKERIZE v0.6.1
+> 서비스 종속성을 위한 유틸리티
+* `Dockerfile` 에서 다운로드 후 `entrypoint.sh`에서 사용
+* https://github.com/jwilder/dockerize 
 ### 1.4 cron_config
+* 마지막 줄에 엔터를 꼭 쳐야함!(EOF로 인한 동작오류 추정) 
+* `dos2unix` 안붙이면 로그파일 생성시 파일뒤에 `?`라는 기호가 추가됨.
+* `crawling_code/crontab_python/`에 위치한 코드들을 반복실행
+* `crawling_code/nlp_model/keyword_extraction.py` 
 ### 1.5 pip_requirements.txt
-- 도커 이미지 만들때 pip install 을 해야할 패지키 목록들을 가지고 있음.
-
-# crawling 폴더
-- 도커이미지 파일(crawling)을 생성하는데 필요한 파일들이 들어있음
-- 파일이름 수정시 전체 시스템이 동작하지 않을 수 있음. (docker-compose 참고)
-
-# cron_config
-- cron_config: 마지막 줄에 엔터를 꼭 쳐야함!(안그러면 동작안함. EOF 때문인듯) 
-- cron_config: dos2unix 이거 안붙이면 로그파일 생성시 파일뒤에 ?라는 기호가 추가됨. 이것도 파일 저장과정에서 원치않은 데이터가 들어가는듯.(연구 필요) 
-
-# entrypoint.sh
-- entrypoint.sh: 도커 실행시 docker-compose.yml 의 command 에서 시작하게 설정 및 volume에 추가 시켜 놓음.
-- create_logstash_db.py init_mapping.py  파일을 자동으로 시작하게 설정되어 있음.
-- dockerize -wait tcp://db:3306 -wait http://elasticsearch:9200 -timeout 50s.  <<---- dockerfile 안에 셋팅 및 다운로드 시켜놓았기 때문에 동작함.
-- init_mapping.py와 create_logstash_db는 기본적으로 실행하는데 오랜 시간이 걸리는데, 이 때문에 50초동안 실행 대기하게 해놓음.
-
-# pip_requirements.txt
-- 도커 이미지 만들때 pip install 을 해야할 패지키 목록들을 가지고 있음.
-
-## 2. elasticsearch
-### 1.1 기본정보
-- 
+* Docker 이미지 생성시 사용되는 pip install 패키지 목록
 
 
+## 2. Elasticsearch
+### 2.1 기본정보
+> 데이터 검색 엔진
+* Dockerfile 파일: `docker/elasticsearch/Dockerfile`
+* 설정 폴더: `docker/elasticsearch/`
+* `elasticsearch 7.3.2`
+### 2.2 Dockerfile
+* `RUN bin/elasticsearch-plugin install analysis-nori` [노리 플러그인](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-nori.html) 사용을 위해 설치
+### 2.3 nori analyzer
+* 한국어 분석 플러그인 노리(nori)
+* `docker/elasticsearch/userdict_ko.txt`에 원하는 사용자 정의 단어 추가 가능.
+
+## 3. Logstash 
+### 3.1 기본정보
+> MySQL과 Elasticsearch 사이에서 데이터 파이프 라인 역할 수행
+* 설정 폴더: `docker/logstash/`
+* `Logstash 7.3.2`
+### 3.2 last_run_metadata 폴더
+* `jdbc-int-sql_last_value.yml` 파일 자동 생성(gitignore 등록되어 있음) 
+* `jdbc-int-sql_last_value.yml` 은 MYSQL에서 엘라스틱서치로 넣을 때 현재 넣은 위치를 트래킹해주는 역할을 함. 
+* `--- 1580101024` UNIX_TIMESTAMP 값으로 구성
+### 3.3 pipline 폴더
+* 로그스태시에서 자동으로 실행될 파이프라인 설정 파일들을 모아놓은 폴더
+* 폴더째로 동작하기 떄문에 필요없는 데이터를 넣어놓으면 안됨
+### 3.4 pipline/pipline.conf
+* input: jdbc 플러그인을 활용하여 MySQL에서 마지막으로 읽은 문서 추적 및 수집
+* filter: 필요없는 데이터 삭제 및 가공
+* output: Elasticsearch 플러그인을 활용하여 Elasticsearch에 데이터 전달
+### 3.5 driver 폴더
+* jdbc 모듈을 사용하기 위한 `mysql-connector-java-5.1.48-bin.jar` 파일 위치
+### 3.6 config 폴더
+* 로그스태시의 기본적인 설정들을 할 수 있는 폴더
+
+## 4. MySQL
+### 4.1 기본정보
+> 크롤러를 사용하여 수집한 데이터를 저장해 놓은 관계형 데이터베이스
+* `Mysql 8.0.18`
 
 
-
-
-# nori analyzer
-- 한국에 분석 플러그인 노리(nori)
-- userdict_ko.txt에 원하는 단어를 추가 시킬 수 있다. (docker-compose.yml 파일 참고)
-
-# Kibana Dashboard 셋팅법
+## 5. kibana
+### 5.1 기본정보
+> Elasticsearch에 저장된 데이터를 시각화
+* `kibana 7.3.2`
+### 5.2 Kibana Dashboard 셋팅법
 > 키바나에서 시각화 방법은 아래 링크 참고해 주시길 바랍니다.
 - 블로그 참고: https://epicarts.tistory.com/75
 
 ## 참고문서
 * [ubuntu 도커 설치](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
 * [엘라스틱서치 vm.max_map_count 설정](https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html)
+* [노리 플러그인](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-nori.html)
+* [Logstash JDBC 데이터베이스 동기화](https://www.elastic.co/kr/blog/how-to-keep-elasticsearch-synchronized-with-a-relational-database-using-logstash)
