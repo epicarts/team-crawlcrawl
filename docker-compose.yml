@@ -1,7 +1,7 @@
 version: '3'
 
 volumes:
-  esdata1: {}
+  esdata: {}
   mysql-db: {}
 
 services:
@@ -51,7 +51,7 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - esdata1:/usr/share/elasticsearch/data
+      - esdata:/usr/share/elasticsearch/data
       - ./docker/elasticsearch/userdict_ko.txt:/usr/share/elasticsearch/config/userdict_ko.txt #단어 분류를 위한 유저 사전 추가
     ports:
       - 9200:9200
