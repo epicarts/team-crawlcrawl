@@ -91,13 +91,11 @@ crwling + elasticsearch + logstash + kibana + mysql
 * `python 3.6.8`
 ### 1.2 entrypoint.sh
 > cron 기능을 사용하기 위한 권한 설정 및 다른 컨테이너와 종속성을 위해 만든 sh 파일
-* create_mysql_table.py init_mapping.py  파일을 자동으로 시작하게 설정되어 있음.
 * `dockerize -wait tcp://db:3306 -wait http://elasticsearch:9200 -timeout 50s.` 다른 컨테이너내의 서비스가 실행되기 기다림.
-* init_mapping.py와 create_mysql_table는 기본적으로 실행하는데 오랜 시간이 걸리는데, 이 때문에 50초동안 실행 대기하게 해놓음.
+* `init_mapping.py`와 `create_mysql_table.py`는 기본적으로 실행하는데 오랜 시간이 걸리는데, 이 때문에 50초동안 실행 대기하게 해놓음.
 ### 1.3 DOCKERIZE v0.6.1
 > 서비스 종속성을 위한 유틸리티
 * `Dockerfile` 에서 다운로드 후 `entrypoint.sh`에서 사용
-* https://github.com/jwilder/dockerize 
 ### 1.4 cron_config
 * 마지막 줄에 엔터를 꼭 쳐야함!(EOF로 인한 동작오류 추정) 
 * `dos2unix` 안붙이면 로그파일 생성시 파일뒤에 `?`라는 기호가 추가됨.
@@ -159,3 +157,4 @@ crwling + elasticsearch + logstash + kibana + mysql
 * [엘라스틱서치 vm.max_map_count 설정](https://www.elastic.co/guide/en/elasticsearch/reference/current/vm-max-map-count.html)
 * [노리 플러그인](https://www.elastic.co/guide/en/elasticsearch/plugins/current/analysis-nori.html)
 * [Logstash JDBC 데이터베이스 동기화](https://www.elastic.co/kr/blog/how-to-keep-elasticsearch-synchronized-with-a-relational-database-using-logstash)
+* [DOCKERIZE v0.6.1](https://github.com/jwilder/dockerize)
