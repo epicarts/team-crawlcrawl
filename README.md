@@ -7,7 +7,7 @@
 
 
 ## 개발환경
-> Docker 를 사용하여 환경 구성
+> Docker 를 사용하여 환경 구성. 
 
 * logstash == 7.3.2
 * elasticsearch == 7.3.2
@@ -75,14 +75,14 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 Docker-compose 에서 기존 `5601 port` 에서 `80 port`로 변경을 하였기 떄문에 로컬 환경에서 웹브라우저를 사용해 `127.0.0.1` 로 접속할 수 있다.(Chrome 권장) 
 
+### 3.2 Kibana Dashboard 셋팅법
+> 키바나에서 시각화 방법은 아래 링크 참고해 주시길 바랍니다.
+* 블로그 참고: https://epicarts.tistory.com/75
+
 
 ---------------------------------------
 # Docker 상세 설명
 > 각 도커 서비스 별로 추가적인 설명
-
-crwling + elasticsearch + logstash + kibana + mysql
-
-
 ## 1. crawling
 ### 1.1 기본 정보
 > python을 기반으로 데이터 자동 수집과 디비 생성, 엘라스틱서치 맵핑 역할 수행
@@ -148,9 +148,6 @@ crwling + elasticsearch + logstash + kibana + mysql
 ### 5.1 기본정보
 > Elasticsearch에 저장된 데이터를 시각화
 * `kibana 7.3.2`
-### 5.2 Kibana Dashboard 셋팅법
-> 키바나에서 시각화 방법은 아래 링크 참고해 주시길 바랍니다.
-- 블로그 참고: https://epicarts.tistory.com/75
 
 ## 참고문서
 * [ubuntu 도커 설치](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
