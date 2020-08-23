@@ -64,8 +64,6 @@ sudo chmod +x /usr/local/bin/docker-compose
 ### 2.2 권한 및 메모리 셋팅
 `sudo sysctl -w vm.max_map_count=262144` 엘라스틱서치 사용을 위한 메모리 셋팅
 
-`sudo chown 1000:1000 -R ./docker/logstash/last_run_metadata/` 로그스태쉬 파일 기록을 위한 권한 셋팅
-
 ### 2.3 Docker-compose 빌드 및 실행
 `sudo docker-compose up --build` 도커 컴포즈 실행 및 빌드
 
